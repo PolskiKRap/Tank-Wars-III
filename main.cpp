@@ -20,6 +20,7 @@ int main()
     {
         while(ekran==0)
         {
+            int akcja=0;
             Sprite menu(menuTexture);
             Sprite button(buttonTexture);
             Event ev1;
@@ -30,6 +31,41 @@ int main()
                     window.close();
                 }
             }
+
+            if(Mouse::getPosition(window).x>300 && Mouse::getPosition(window).x< 500 && Mouse::getPosition(window).y>300 && Mouse::getPosition(window).y<350)
+            {
+                akcja=1;
+            }
+            if(Mouse::getPosition(window).x>300 && Mouse::getPosition(window).x< 500 && Mouse::getPosition(window).y>400 && Mouse::getPosition(window).y<450)
+            {
+                akcja=2;
+            }
+            if(Mouse::getPosition(window).x>300 && Mouse::getPosition(window).x< 500 && Mouse::getPosition(window).y>500 && Mouse::getPosition(window).y<550)
+            {
+                akcja=3;
+            }
+            if(Mouse::getPosition(window).x>300 && Mouse::getPosition(window).x< 500 && Mouse::getPosition(window).y>600 && Mouse::getPosition(window).y<650)
+            {
+                akcja=4;
+            }
+
+            if(akcja==1 && Mouse::isButtonPressed(Mouse::Left))
+            {
+                ekran=1;
+            }
+            if(akcja==2 && Mouse::isButtonPressed(Mouse::Left))
+            {
+                ekran=2;
+            }
+            if(akcja==3 && Mouse::isButtonPressed(Mouse::Left))
+            {
+                ekran=3;
+            }
+            if(akcja==4 && Mouse::isButtonPressed(Mouse::Left))
+            {
+                window.close();
+            }
+
             window.clear(Color(11, 96, 21));
             window.draw(menu);
 
@@ -52,6 +88,13 @@ int main()
                    text.setPosition(Vector2f(350,300));
                    button.setPosition(Vector2f(200,290));
                    window.draw(button);
+
+                   if(akcja==1)
+                   {
+                       text.setFillColor(Color::Red);
+                       text.setStyle(Text::Bold | Text::Underlined);
+                       akcja=0;
+                   }
                }
                if(i==2)
                {
@@ -62,6 +105,13 @@ int main()
                    text.setPosition(Vector2f(350,400));
                    button.setPosition(Vector2f(200,390));
                    window.draw(button);
+
+                   if(akcja==2)
+                   {
+                       text.setFillColor(Color::Red);
+                       text.setStyle(Text::Bold | Text::Underlined);
+                       akcja=0;
+                   }
                }
                if(i==3)
                {
@@ -72,6 +122,13 @@ int main()
                    text.setPosition(Vector2f(350,600));
                    button.setPosition(Vector2f(200,590));
                    window.draw(button);
+
+                   if(akcja==4)
+                   {
+                       text.setFillColor(Color::Red);
+                       text.setStyle(Text::Bold | Text::Underlined);
+                       akcja=0;
+                   }
                }
                if(i==4)
                {
@@ -82,6 +139,13 @@ int main()
                    text.setPosition(Vector2f(350,500));
                    button.setPosition(Vector2f(200,490));
                    window.draw(button);
+
+                   if(akcja==3)
+                   {
+                       text.setFillColor(Color::Red);
+                       text.setStyle(Text::Bold | Text::Underlined);
+                       akcja=0;
+                   }
                }
                if(i==5)
                {
