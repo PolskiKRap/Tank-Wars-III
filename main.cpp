@@ -17,6 +17,8 @@ int main()
     buttonTexture.loadFromFile("button.png");
     Texture tworcyTexture;
     tworcyTexture.loadFromFile("tloTworcy.jpg");
+    Texture opcjeTexture;
+    opcjeTexture.loadFromFile("tloOpcje.jpg");
 
     while(window.isOpen())
     {
@@ -164,10 +166,57 @@ int main()
 
         while(ekran==1)
         {
+            Event ev2;
+            while(window.pollEvent(ev2))
+            {
+                if(ev2.type == Event::Closed)
+                {
+                    window.close();
+                }
+            }
         }
 
         while(ekran==2)
         {
+            Event ev3;
+            Sprite opcje(opcjeTexture);
+            Sprite button(buttonTexture);
+            bool akcja=false;
+            while(window.pollEvent(ev3))
+            {
+                if(ev3.type == Event::Closed)
+                {
+                    window.close();
+                }
+            }
+
+            if(Mouse::getPosition(window).x>400 && Mouse::getPosition(window).x<600 && Mouse::getPosition(window).y>800 && Mouse::getPosition(window).y<850)
+            {
+                akcja=true;
+            }
+            if(akcja==true && Mouse::isButtonPressed(Mouse::Left))
+            {
+                ekran=0;
+            }
+
+            window.clear();
+            window.draw(opcje);
+            text.setString("Powrot");
+            text.setCharacterSize(50);
+            text.setFillColor(Color::Black);
+            text.setPosition(Vector2f(400,800));
+            text.setStyle(Text::Bold);
+            button.setPosition(Vector2f(250,790));
+            if(akcja)
+            {
+                text.setFillColor(Color::Red);
+                akcja=false;
+            }
+            window.draw(button);
+            window.draw(text);
+            window.display();
+
+
         }
 
         while(ekran==3)
@@ -206,63 +255,63 @@ int main()
                 }
                 if(i==1)
                 {
-                    text.setString("Kierownik ds. Informatyki: XXX.");
+                    text.setString("Kierownik ds. Informatyki: Marek Ciezobka.");
                     text.setCharacterSize(30);
                     text.setFillColor(Color::Black);
                     text.setPosition(Vector2f(20,100));
                 }
                 if(i==2)
                 {
-                    text.setString("Programista C++: XXX");
+                    text.setString("Programista C++: Krzysztof Chowaniec");
                     text.setCharacterSize(30);
                     text.setFillColor(Color::Black);
                     text.setPosition(Vector2f(20,150));
                 }
                 if(i==3)
                 {
-                    text.setString("Programista gier komputerowych: XXX");
+                    text.setString("Programista gier komputerowych: Krzysztof Chowaniec");
                     text.setCharacterSize(30);
                     text.setFillColor(Color::Black);
                     text.setPosition(Vector2f(20,200));
                 }
                 if(i==4)
                 {
-                    text.setString("Informatyk: XXX");
+                    text.setString("Informatyk: Krzysztof Chowaniec, Rafal Banas");
                     text.setCharacterSize(30);
                     text.setFillColor(Color::Black);
                     text.setPosition(Vector2f(20,250));
                 }
                 if(i==5)
                 {
-                    text.setString("Kierownik projektu: XXX");
+                    text.setString("Kierownik projektu: Miroslaw Zelent");
                     text.setCharacterSize(30);
                     text.setFillColor(Color::Black);
                     text.setPosition(Vector2f(20,300));
                 }
                 if(i==6)
                 {
-                    text.setString("Kierownik zespolu: XXX");
+                    text.setString("Kierownik zespolu: Krzysztof Chowaniec");
                     text.setCharacterSize(30);
                     text.setFillColor(Color::Black);
                     text.setPosition(Vector2f(20,350));
                 }
                 if(i==7)
                 {
-                    text.setString("Specjalista do spraw aplikacji: XXX");
+                    text.setString("Specjalista do spraw aplikacji: Bartek Krupa");
                     text.setCharacterSize(30);
                     text.setFillColor(Color::Black);
                     text.setPosition(Vector2f(20,400));
                 }
                 if(i==8)
                 {
-                    text.setString("Specjalista do spraw IT: XXX");
+                    text.setString("Specjalista do spraw IT: Szymon Kolasa");
                     text.setCharacterSize(30);
                     text.setFillColor(Color::Black);
                     text.setPosition(Vector2f(20,450));
                 }
                 if(i==9)
                 {
-                    text.setString("Stworzone z mysla o: XXX");
+                    text.setString("Stworzone z mysla o: M.Ciezobka, R.Banas, B.Krupa");
                     text.setCharacterSize(30);
                     text.setFillColor(Color::Black);
                     text.setPosition(Vector2f(20,500));
