@@ -1,8 +1,12 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 using namespace sf;
 
-int ekran=0;
+int ekran=1;
+bool setPosition=true;
+Vector2f positionTankGreen;
+float rotationGreen=0;
 
 int main()
 {
@@ -19,6 +23,10 @@ int main()
     tworcyTexture.loadFromFile("tloTworcy.jpg");
     Texture opcjeTexture;
     opcjeTexture.loadFromFile("tloOpcje.jpg");
+    Texture tankGreenTexture;
+    tankGreenTexture.loadFromFile("tankGreen.png");
+    positionTankGreen = Vector2f(880,880);
+    window.setFramerateLimit(60);
 
     while(window.isOpen())
     {
@@ -167,6 +175,18 @@ int main()
         while(ekran==1)
         {
             Event ev2;
+            RectangleShape rectangle;
+            rectangle.setFillColor(Color(86, 88, 91));
+            Sprite tankGreen(tankGreenTexture);
+            Sprite tankGray(tankGreenTexture);
+            tankGray.setColor(Color(104, 47, 30, 150));
+            tankGreen.setOrigin(Vector2f(20,20));
+            tankGray.setOrigin(Vector2f(20,20));
+            tankGreen.setPosition(positionTankGreen);
+            tankGreen.setRotation(rotationGreen);
+            int akcja=0;
+            int liczbaCalkowita=90;
+            float predkosc=1;
             while(window.pollEvent(ev2))
             {
                 if(ev2.type == Event::Closed)
@@ -174,6 +194,156 @@ int main()
                     window.close();
                 }
             }
+
+            ///ruch i wykrywanie kolizji dla zielonego czolga
+
+            if(Keyboard::isKeyPressed(Keyboard::Up))
+            {
+                akcja=1;
+            }
+            if(Keyboard::isKeyPressed(Keyboard::Right))
+            {
+                akcja=2;
+            }
+            if(Keyboard::isKeyPressed(Keyboard::Down))
+            {
+                akcja=3;
+            }
+            if(Keyboard::isKeyPressed(Keyboard::Left))
+            {
+                akcja=4;
+            }
+
+            if(akcja==1)
+            {
+                if(tankGreen.getRotation()<=90)
+                {
+                    float stopien = tankGreen.getRotation();
+                    float procent = stopien/liczbaCalkowita;
+                    float posX = procent;
+                    float posY = predkosc - procent;
+                    Vector2f position = tankGreen.getPosition();
+                    positionTankGreen = Vector2f(position.x+posX, position.y-posY);
+                }
+                if(tankGreen.getRotation()>90 && tankGreen.getRotation()<=180)
+                {
+                    float stopien = tankGreen.getRotation()-90;
+                    float procent = stopien/liczbaCalkowita;
+                    float posY = procent;
+                    float posX = predkosc - procent;
+                    Vector2f position = tankGreen.getPosition();
+                    positionTankGreen = Vector2f(position.x+posX, position.y+posY);
+                }
+                if(tankGreen.getRotation()>180 && tankGreen.getRotation()<=270)
+                {
+                    float stopien = tankGreen.getRotation()-180;
+                    float procent = stopien/liczbaCalkowita;
+                    float posY = predkosc - procent;
+                    float posX = procent;
+                    Vector2f position = tankGreen.getPosition();
+                    positionTankGreen = Vector2f(position.x-posX, position.y+posY);
+                }
+                if(tankGreen.getRotation()>270 && tankGreen.getRotation()<=360)
+                {
+                    float stopien = tankGreen.getRotation()-270;
+                    float procent = stopien/liczbaCalkowita;
+                    float posY = procent;
+                    float posX = predkosc - procent;
+                    Vector2f position = tankGreen.getPosition();
+                    positionTankGreen = Vector2f(position.x-posX, position.y-posY);
+                }
+                akcja=0;
+            }
+            if(akcja==2)
+            {
+                rotationGreen = tankGreen.getRotation()+1;
+            }
+            if(akcja==3)
+            {
+                if(tankGreen.getRotation()<=90)
+                {
+                    float stopien = tankGreen.getRotation();
+                    float procent = stopien/liczbaCalkowita;
+                    float posX = procent;
+                    float posY = predkosc - procent;
+                    Vector2f position = tankGreen.getPosition();
+                    positionTankGreen = Vector2f(position.x-posX, position.y+posY);
+                }
+                if(tankGreen.getRotation()>90 && tankGreen.getRotation()<=180)
+                {
+                    float stopien = tankGreen.getRotation()-90;
+                    float procent = stopien/liczbaCalkowita;
+                    float posY = procent;
+                    float posX = predkosc - procent;
+                    Vector2f position = tankGreen.getPosition();
+                    positionTankGreen = Vector2f(position.x-posX, position.y-posY);
+                }
+                if(tankGreen.getRotation()>180 && tankGreen.getRotation()<=270)
+                {
+                    float stopien = tankGreen.getRotation()-180;
+                    float procent = stopien/liczbaCalkowita;
+                    float posY = predkosc - procent;
+                    float posX = procent;
+                    Vector2f position = tankGreen.getPosition();
+                    positionTankGreen = Vector2f(position.x+posX, position.y-posY);
+                }
+                if(tankGreen.getRotation()>270 && tankGreen.getRotation()<=360)
+                {
+                    float stopien = tankGreen.getRotation()-270;
+                    float procent = stopien/liczbaCalkowita;
+                    float posY = procent;
+                    float posX = predkosc - procent;
+                    Vector2f position = tankGreen.getPosition();
+                    positionTankGreen = Vector2f(position.x+posX, position.y+posY);
+                }
+            }
+            if(akcja==4)
+            {
+                rotationGreen = tankGreen.getRotation()-1;
+            }
+
+            window.clear(Color(130, 136, 145));
+            for(int i=0; i<7; i++)
+            {
+                if(i==0)
+                {
+                    rectangle.setSize(Vector2f(20,200));
+                    rectangle.setPosition(Vector2f(100,0));
+                }
+                if(i==1)
+                {
+                    rectangle.setSize(Vector2f(300,20));
+                    rectangle.setPosition(Vector2f(0,700));
+                }
+                if(i==2)
+                {
+                    rectangle.setSize(Vector2f(20,500));
+                    rectangle.setPosition(Vector2f(450,450));
+                }
+                if(i==3)
+                {
+                    rectangle.setSize(Vector2f(200,20));
+                    rectangle.setPosition(Vector2f(0,450));
+                }
+                if(i==4)
+                {
+                    rectangle.setSize(Vector2f(20,400));
+                    rectangle.setPosition(Vector2f(700,0));
+                }
+                if(i==5)
+                {
+                    rectangle.setSize(Vector2f(300,20));
+                    rectangle.setPosition(300,200);
+                }
+                if(i==6)
+                {
+                    rectangle.setSize(Vector2f(200,20));
+                    rectangle.setPosition(600,600);
+                }
+                window.draw(tankGreen);
+                window.draw(rectangle);
+            }
+            window.display();
         }
 
         while(ekran==2)
