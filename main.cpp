@@ -7,6 +7,8 @@ int ekran=1;
 bool setPosition=true;
 Vector2f positionTankGreen;
 float rotationGreen=0;
+Vector2f positionTankGray;
+float rotationGray=180;
 
 int main()
 {
@@ -25,8 +27,9 @@ int main()
     opcjeTexture.loadFromFile("tloOpcje.jpg");
     Texture tankGreenTexture;
     tankGreenTexture.loadFromFile("tankGreen.png");
-    positionTankGreen = Vector2f(880,880);
+    positionTankGreen = Vector2f(860,860);
     window.setFramerateLimit(60);
+    positionTankGray = Vector2f(40,40);
 
     while(window.isOpen())
     {
@@ -179,14 +182,17 @@ int main()
             rectangle.setFillColor(Color(86, 88, 91));
             Sprite tankGreen(tankGreenTexture);
             Sprite tankGray(tankGreenTexture);
-            tankGray.setColor(Color(104, 47, 30, 150));
+            tankGray.setColor(Color(104, 47, 30));
             tankGreen.setOrigin(Vector2f(20,20));
             tankGray.setOrigin(Vector2f(20,20));
             tankGreen.setPosition(positionTankGreen);
             tankGreen.setRotation(rotationGreen);
+            tankGray.setPosition(positionTankGray);
+            tankGray.setRotation(rotationGray);
             int akcja=0;
             int liczbaCalkowita=90;
             float predkosc=1;
+            int action=0;
             while(window.pollEvent(ev2))
             {
                 if(ev2.type == Event::Closed)
@@ -212,6 +218,79 @@ int main()
             if(Keyboard::isKeyPressed(Keyboard::Left))
             {
                 akcja=4;
+            }
+
+            if((tankGreen.getPosition().x+20)>=900)
+            {
+                akcja=0;
+                if(tankGreen.getRotation()<=180)
+                {
+                    if(Keyboard::isKeyPressed(Keyboard::Down))
+                    {
+                        akcja=3;
+                    }
+                }
+                else if(tankGreen.getRotation()>=180)
+                {
+                    if(Keyboard::isKeyPressed(Keyboard::Up))
+                    {
+                        akcja=1;
+                    }
+                }
+            }
+            if((tankGreen.getPosition().y+20)>=900)
+            {
+                akcja=0;
+                if(tankGreen.getRotation()<=90 || tankGreen.getRotation()>=270)
+                {
+                    if(Keyboard::isKeyPressed(Keyboard::Up))
+                    {
+                        akcja=1;
+                    }
+                }
+                else if(tankGreen.getRotation()>=90 && tankGreen.getRotation()<=270)
+                {
+                    if(Keyboard::isKeyPressed(Keyboard::Down))
+                    {
+                        akcja=3;
+                    }
+                }
+            }
+            if((tankGreen.getPosition().x-20)<=0)
+            {
+                akcja=0;
+                if(tankGreen.getRotation()>=180)
+                {
+                    if(Keyboard::isKeyPressed(Keyboard::Down))
+                    {
+                        akcja=3;
+                    }
+                }
+                else if(tankGreen.getRotation()<=180)
+                {
+                    if(Keyboard::isKeyPressed(Keyboard::Up))
+                    {
+                        akcja=1;
+                    }
+                }
+            }
+            if((tankGreen.getPosition().y-20)<=0)
+            {
+                akcja=0;
+                if(tankGreen.getRotation()<=90 || tankGreen.getRotation()>=270)
+                {
+                    if(Keyboard::isKeyPressed(Keyboard::Down))
+                    {
+                        akcja=3;
+                    }
+                }
+                else if(tankGreen.getRotation()>=90 && tankGreen.getRotation()<=270)
+                {
+                    if(Keyboard::isKeyPressed(Keyboard::Up))
+                    {
+                        akcja=1;
+                    }
+                }
             }
 
             if(akcja==1)
@@ -302,6 +381,187 @@ int main()
                 rotationGreen = tankGreen.getRotation()-1;
             }
 
+
+            ///ruch i wykrywanie kolizji dla szarego czolga
+
+            if(Keyboard::isKeyPressed(Keyboard::W))
+            {
+                action=1;
+            }
+            if(Keyboard::isKeyPressed(Keyboard::D))
+            {
+                action=2;
+            }
+            if(Keyboard::isKeyPressed(Keyboard::S))
+            {
+                action=3;
+            }
+            if(Keyboard::isKeyPressed(Keyboard::A))
+            {
+                action=4;
+            }
+
+            if((tankGray.getPosition().x+20)>=900)
+            {
+                action=0;
+                if(tankGray.getRotation()<=180)
+                {
+                    if(Keyboard::isKeyPressed(Keyboard::S))
+                    {
+                        action=3;
+                    }
+                }
+                else if(tankGray.getRotation()>=180)
+                {
+                    if(Keyboard::isKeyPressed(Keyboard::W))
+                    {
+                        action=1;
+                    }
+                }
+            }
+            if((tankGray.getPosition().y+20)>=900)
+            {
+                action=0;
+                if(tankGray.getRotation()<=90 || tankGray.getRotation()>=270)
+                {
+                    if(Keyboard::isKeyPressed(Keyboard::W))
+                    {
+                        action=1;
+                    }
+                }
+                else if(tankGray.getRotation()>=90 && tankGray.getRotation()<=270)
+                {
+                    if(Keyboard::isKeyPressed(Keyboard::S))
+                    {
+                        action=3;
+                    }
+                }
+            }
+            if((tankGray.getPosition().x-20)<=0)
+            {
+                action=0;
+                if(tankGray.getRotation()>=180)
+                {
+                    if(Keyboard::isKeyPressed(Keyboard::S))
+                    {
+                        action=3;
+                    }
+                }
+                else if(tankGray.getRotation()<=180)
+                {
+                    if(Keyboard::isKeyPressed(Keyboard::W))
+                    {
+                        action=1;
+                    }
+                }
+            }
+            if((tankGray.getPosition().y-20)<=0)
+            {
+                action=0;
+                if(tankGray.getRotation()<=90 || tankGray.getRotation()>=270)
+                {
+                    if(Keyboard::isKeyPressed(Keyboard::S))
+                    {
+                        action=3;
+                    }
+                }
+                else if(tankGray.getRotation()>=90 && tankGray.getRotation()<=270)
+                {
+                    if(Keyboard::isKeyPressed(Keyboard::W))
+                    {
+                        action=1;
+                    }
+                }
+            }
+
+            if(action==1)
+            {
+                if(tankGray.getRotation()<=90)
+                {
+                    float stopien = tankGray.getRotation();
+                    float procent = stopien/liczbaCalkowita;
+                    float posX = procent;
+                    float posY = predkosc - procent;
+                    Vector2f position = tankGray.getPosition();
+                    positionTankGray = Vector2f(position.x+posX, position.y-posY);
+                }
+                if(tankGray.getRotation()>90 && tankGray.getRotation()<=180)
+                {
+                    float stopien = tankGray.getRotation()-90;
+                    float procent = stopien/liczbaCalkowita;
+                    float posY = procent;
+                    float posX = predkosc - procent;
+                    Vector2f position = tankGray.getPosition();
+                    positionTankGray = Vector2f(position.x+posX, position.y+posY);
+                }
+                if(tankGray.getRotation()>180 && tankGray.getRotation()<=270)
+                {
+                    float stopien = tankGray.getRotation()-180;
+                    float procent = stopien/liczbaCalkowita;
+                    float posY = predkosc - procent;
+                    float posX = procent;
+                    Vector2f position = tankGray.getPosition();
+                    positionTankGray = Vector2f(position.x-posX, position.y+posY);
+                }
+                if(tankGray.getRotation()>270 && tankGray.getRotation()<=360)
+                {
+                    float stopien = tankGray.getRotation()-270;
+                    float procent = stopien/liczbaCalkowita;
+                    float posY = procent;
+                    float posX = predkosc - procent;
+                    Vector2f position = tankGray.getPosition();
+                    positionTankGray = Vector2f(position.x-posX, position.y-posY);
+                }
+                action=0;
+            }
+            if(action==2)
+            {
+                rotationGray = tankGray.getRotation()+1;
+            }
+            if(action==3)
+            {
+                if(tankGray.getRotation()<=90)
+                {
+                    float stopien = tankGray.getRotation();
+                    float procent = stopien/liczbaCalkowita;
+                    float posX = procent;
+                    float posY = predkosc - procent;
+                    Vector2f position = tankGray.getPosition();
+                    positionTankGray = Vector2f(position.x-posX, position.y+posY);
+                }
+                if(tankGray.getRotation()>90 && tankGray.getRotation()<=180)
+                {
+                    float stopien = tankGray.getRotation()-90;
+                    float procent = stopien/liczbaCalkowita;
+                    float posY = procent;
+                    float posX = predkosc - procent;
+                    Vector2f position = tankGray.getPosition();
+                    positionTankGray = Vector2f(position.x-posX, position.y-posY);
+                }
+                if(tankGray.getRotation()>180 && tankGray.getRotation()<=270)
+                {
+                    float stopien = tankGray.getRotation()-180;
+                    float procent = stopien/liczbaCalkowita;
+                    float posY = predkosc - procent;
+                    float posX = procent;
+                    Vector2f position = tankGray.getPosition();
+                    positionTankGray = Vector2f(position.x+posX, position.y-posY);
+                }
+                if(tankGray.getRotation()>270 && tankGray.getRotation()<=360)
+                {
+                    float stopien = tankGray.getRotation()-270;
+                    float procent = stopien/liczbaCalkowita;
+                    float posY = procent;
+                    float posX = predkosc - procent;
+                    Vector2f position = tankGray.getPosition();
+                    positionTankGray = Vector2f(position.x+posX, position.y+posY);
+                }
+            }
+            if(action==4)
+            {
+                rotationGray = tankGray.getRotation()-1;
+            }
+
             window.clear(Color(130, 136, 145));
             for(int i=0; i<7; i++)
             {
@@ -340,9 +600,10 @@ int main()
                     rectangle.setSize(Vector2f(200,20));
                     rectangle.setPosition(600,600);
                 }
-                window.draw(tankGreen);
                 window.draw(rectangle);
             }
+            window.draw(tankGreen);
+            window.draw(tankGray);
             window.display();
         }
 
